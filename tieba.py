@@ -114,7 +114,7 @@ class Tieba:
 
 if __name__ == "__main__":
     try:
-        tb = Tieba("rapid_test","520lmdforever")
+        tb = Tieba("","")
         tb.login()
         tb.get_favolist()
     except err.EXC_rpbtman,e:
