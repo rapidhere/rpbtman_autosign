@@ -1,0 +1,9 @@
+application: rapidtestautosign
+version: 3
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+- url: /all
+  script: run.py
