@@ -4,10 +4,7 @@
 import tieba,err,sign
 import time,threading,urllib2,random
 import datetime,pytz
-
-#    username         password
-TASK_LIST = (
-)
+from task_list import TASK_LIST
 
 # Multi Thread Sign Support for sign
 # Not use in this version
@@ -41,6 +38,7 @@ class SignResult(db.Model):
     tkwd = db.StringProperty()
     erro = db.IntegerProperty()
     time = db.DateProperty()
+    rtim = db.DateTimeProperty()
 
 class SignDoneMark(db.Model):
     user = db.StringProperty()
@@ -78,10 +76,13 @@ def sign_usr(usr,psw):
         qu.filter("user =",usr.decode("utf-8"))
         qu.filter("time =",ctime)
         qu.filter("tkwd =",t.decode("utf-8"))
+        qu.order("-rtim")
 
-        p = qu.get()
-        if p and (p.erro in [0,1101,1007]):  # success,has_signed,sign_too_much
-            continue
+        p = qu.fetch(None)
+        if p:
+            p = p[0]
+            if p.erro in [0,1101,1007]:  # success,has_signed,sign_too_much
+                continue
 
         errno = 0
         try:
@@ -100,7 +101,8 @@ def sign_usr(usr,psw):
             user = usr.decode("utf-8"),
             tkwd = t.decode("utf-8"),
             erro = errno,
-            time = ctime
+            time = ctime,
+            rtim = datetime.datetime.now(pytz.timezone("Asia/Chongqing"))
         )
         sret.put()
 
