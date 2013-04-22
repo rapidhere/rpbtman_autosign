@@ -98,12 +98,21 @@ class Tieba:
         if not self.login_man.has_login():
             raise NotLoginError()
 
-        url = 'http://tieba.baidu.com/i/sys/enter?ie=utf-8&kw=%s' % urllib2.quote(self.get_username().decode("utf-8").encode("gbk"))
+        url = 'http://tieba.baidu.com/i/sys/enter?ie=utf-8&kw=%s' % urllib2.quote(self.get_username().decode(constant.CODEC).encode("gbk"))
         buf = self.opener.open(url).read()
+
+        def _repl_func(b):
+            b = int(b.groups()[0])
+            if b >= 0 and b <= 255:
+                return chr(b)
+            return ''
+
+        buf = re.sub("\&\#(\d+);",_repl_func,buf)
+
         favo_list_buf = re.findall(r'\$_likeForum=(.*?);',buf)[0]
         favo_list = []
         for b in json.loads(favo_list_buf):
-            favo_list.append(b['name'].encode('utf-8'))
+            favo_list.append(b['name'].encode(constant.CODEC))
         return favo_list
 
     def set_username(self,uname): self.username = uname
@@ -116,6 +125,7 @@ if __name__ == "__main__":
     try:
         tb = Tieba("","")
         tb.login()
-        tb.get_favolist()
+        for t in rb.favo_list():
+            print t
     except err.EXC_rpbtman,e:
         print e.FormatStr()

@@ -1,7 +1,12 @@
-Autosigner to tieba.baidu.com
+rapid Baidu tieba Manager
+
+Description
+  Just a simple personal tieba manager
+  A practice one
 
 ver 0.1
-   Autosign
-
-ver 0.2
-   Mail out
+  sign into baidu
+  sign a tieba
+  
+  $ 2013.4.15 almost complete the request of ver 0.1
+  $ 2013.4.16 fix some bugs ver 0.1.1

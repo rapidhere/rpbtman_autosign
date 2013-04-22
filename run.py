@@ -47,7 +47,7 @@ class SignDoneMark(db.Model):
 #Sign a user
 def mark_usr(usr,ctime):
     umark = SignDoneMark(
-        user = usr,
+        user = usr.decode("utf-8"),
         time = ctime
     )
     umark.put()

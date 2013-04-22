@@ -1,9 +1,9 @@
 cron:
 - description: daily sign job
   url: /run
-  schedule: every 1 mins from 00:00 to 00:20
+  schedule: every 1 mins from 00:10 to 00:30
   timezone: Asia/Chongqing
 - description: daily clean up and report
   url: /report
-  schedule: every 1 mins from 00:21 to 00:21
+  schedule: every 1 mins from 00:31 to 00:31
   timezone: Asia/Chongqing

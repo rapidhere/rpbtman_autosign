@@ -50,9 +50,9 @@ def report():
 
     for usr,psw in TASK_LIST:
         qu = db.Query(SignResult)
-        qu.filter("time =",ctime).filter("user = ",usr)
+        qu.filter("time =",ctime).filter("user = ",usr.decode("utf-8"))
         msgbuf += "=" * 80
-        msgbuf += "\nUSER %s :\n" % usr
+        msgbuf += "\nUSER %s :\n" % usr.decode("utf-8")
 
         for ret in qu.fetch(None):
             msgbuf += "    " + ret.tkwd
